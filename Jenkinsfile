@@ -20,7 +20,10 @@ pipeline {
                 sh './jenkins/scripts/test.sh' 
             }
         }
-    
+    stage('OWASP Dependency Check') {
+	    steps {
+		dependencyCheck additionalArguments: '--disableAssembly --enableExperimental --format HTML --format XML', odcInstallation: 'Default'
+            } 
     stage('Deliver2') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
