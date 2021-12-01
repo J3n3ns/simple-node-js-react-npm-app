@@ -22,19 +22,10 @@ pipeline {
         }
     stage('OWASP Dependency Check') {
 	    steps {
-		dependencyCheck additionalArguments: '--disableAssembly --enableExperimental --format HTML --format XML', odcInstallation: 'default'
+		dependencyCheck additionalArguments: '', odcInstallation: 'default'
             }
         } 
     stage('Deliver'){
 		steps {
 			sh './jenkins/scripts/test.sh'
 		}
-	}
-    }
-    post {
-		success {
-			dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-		}
-	}
-}
-
