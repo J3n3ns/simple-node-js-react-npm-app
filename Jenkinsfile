@@ -22,7 +22,7 @@ pipeline {
         }
     stage('OWASP Dependency Check') {
 	    steps {
-		dependencyCheck additionalArguments: '', odcInstallation: 'default'
+            dependencyCheck additionalArguments: '', odcInstallation: 'OWASP'
             }
         } 
     stage('Deliver'){
