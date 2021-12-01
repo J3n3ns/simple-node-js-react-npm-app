@@ -25,7 +25,11 @@ pipeline {
 		dependencyCheck additionalArguments: '--disableAssembly --enableExperimental --format HTML --format XML', odcInstallation: 'Default'
             }
         } 
-
+    stage('Deliver'){
+	steps {
+	sh './jenkins/scripts/test.sh'
+	}
+	}
     }
 }
 
