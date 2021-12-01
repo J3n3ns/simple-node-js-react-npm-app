@@ -1,34 +1,24 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:lts-buster-slim' 
-            args '-p 3000:3000' 
-        }
-    }
-    environment {
-        CI = 'true' 
-    }
-    stages {
-        stage('Build2') { 
-            steps {
-                sh 'npm install' 
-            }
-        }
-    
-    stage('Test2') { 
-            steps {
-                sh './jenkins/scripts/test.sh' 
-            }
-        }
-    stage('OWASP Dependency Check') {
-	    steps {
-            dependencyCheck additionalArguments: '', odcInstallation: 'Default'
-            }
-        } 
-    stage('Deliver'){
-		steps {
-			sh './jenkins/scripts/test.sh'
-            }
-        }
-    }
+	options {
+    timestamps() // Append timestamps to each line
+    timeout(time: 20, unit: 'MINUTES') // Set a timeout on the total execution time of the job
+  	}
+	agent any
+	stages {
+		stage('Checkout') { // Checkout (git clone ...) the projects repository
+			steps {
+				checkout scm
+			}
+		}
+		stage('OWASP DependencyCheck') {
+			steps {
+				dependencyCheck additionalArguments: '--disableYarnAudit --format HTML --format XML', odcInstallation: 'Default'
+			}
+			post {
+				success {
+					dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+				}
+			}
+		}
+	}
 }
