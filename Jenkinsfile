@@ -22,7 +22,7 @@ pipeline {
         }
     stage('OWASP Dependency Check') {
 	    steps {
-		dependencyCheck additionalArguments: '--disableAssembly --enableExperimental --format HTML --format XML', odcInstallation: 'OWASP'
+		dependencyCheck additionalArguments: '--disableAssembly --enableExperimental --format HTML --format XML', odcInstallation: 'default'
             }
         } 
     stage('Deliver'){
