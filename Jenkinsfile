@@ -5,7 +5,7 @@ pipeline {
   	}
 	agent any
 	stages {
-		stage('Checkout2') { // Checkout (git clone ...) the projects repository
+		stage('Checkout 2') { // Checkout (git clone ...) the projects repository
 			steps {
 				checkout scm
 			}
