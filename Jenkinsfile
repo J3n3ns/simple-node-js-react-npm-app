@@ -26,10 +26,15 @@ pipeline {
             }
         } 
     stage('Deliver'){
-	steps {
-	sh './jenkins/scripts/test.sh'
-	}
+		steps {
+			sh './jenkins/scripts/test.sh'
+		}
 	}
     }
+    post {
+		success {
+			dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+		}
+	}
 }
 
